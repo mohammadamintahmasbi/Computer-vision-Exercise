@@ -43,6 +43,13 @@ def hide_logo(image_path, logo_path, output_path):
             img_g = (img_g & ~1) | int(g_bin[-1])
             img_b = (img_b & ~1) | int(b_bin[-1])
             
+            # For Using MSB you can replace above lines with this lines :
+            # Replace LSB manipulation with MSB manipulation
+
+            ## img_r = (img_r & 127) | (int(r_bin[0]) << 7)
+            ## img_g = (img_g & 127) | (int(g_bin[0]) << 7)
+            ## img_b = (img_b & 127) | (int(b_bin[0]) << 7)
+
             
             # Update the pixel in the original image
             image_pixels[img_x, img_y] = (img_r, img_g, img_b)
