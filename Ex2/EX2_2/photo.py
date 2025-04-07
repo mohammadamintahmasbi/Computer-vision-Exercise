@@ -99,9 +99,9 @@ k_values = [1, 2, 5, 10, 15, 20]  # Different k values to test
 # Generate noisy images
 original, noisy_images = generate_noisy_images(original_img_path, k=max(k_values))
 
-# if noisy_images is not None:
-#     # Save noisy images (optional)
-#     for i, image in enumerate(noisy_images):
-#         Image.fromarray(image).save(f'noisy_image_{i}.png')
+if noisy_images is not None:
+    # Save noisy images (optional)
+    for i, image in enumerate(noisy_images):
+        Image.fromarray(image).save(f'noisy_image_{i}.png')
 
 denoise_and_visualize(original, noisy_images, k_values)
