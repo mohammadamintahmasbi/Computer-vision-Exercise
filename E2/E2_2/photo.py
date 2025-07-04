@@ -3,7 +3,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import os
 
-def generate_noisy_images(original_path, k=20, noise_variance=1):
+def generate_noisy_images(original_path, k=1, noise_variance=1):
     """
     Generates k noisy versions of original image with Gaussian noise
     Args:
