@@ -2,13 +2,10 @@ import tensorflow as tf
 from tensorflow.keras import layers, models
 import matplotlib.pyplot as plt
 
-# بارگذاری داده‌های CIFAR10
 (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.cifar10.load_data()
 
-# نرمال‌سازی تصاویر به محدوده [0,1]
 train_images, test_images = train_images / 255.0, test_images / 255.0
 
-# تبدیل به تصاویر خاکستری (اگر لازم است)
 train_images_gray = tf.image.rgb_to_grayscale(train_images)
 test_images_gray = tf.image.rgb_to_grayscale(test_images)
 
@@ -21,21 +18,21 @@ model = models.Sequential([
     layers.Conv2D(16, (3, 3), strides=(1, 1), padding='same', input_shape=(32, 32, 3)),
     layers.BatchNormalization(),
     layers.ReLU(),
-    layers.SpatialDropout2D(0.1),  # جدید
+    layers.SpatialDropout2D(0.1),  
     layers.MaxPooling2D((2, 2), strides=(1, 1)),
     
     # لایه دوم (Conv2)
     layers.Conv2D(32, (3, 3), strides=(1, 1), padding='same'),
     layers.BatchNormalization(),
     layers.ReLU(),
-    layers.SpatialDropout2D(0.15),  # جدید
+    layers.SpatialDropout2D(0.15), 
     layers.MaxPooling2D((2, 2), strides=(1, 1)),
     
     # لایه سوم (Conv3)
     layers.Conv2D(64, (3, 3), strides=(1, 1), padding='same'),
     layers.BatchNormalization(),
     layers.ReLU(),
-    layers.SpatialDropout2D(0.2),  # جدید
+    layers.SpatialDropout2D(0.2),  
     layers.GlobalAveragePooling2D(),
     
     # طبقه‌بندی
@@ -52,7 +49,7 @@ model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
 
 history = model.fit(train_images_gray, train_labels, 
                     epochs=100, 
-                    batch_size=8,  # مقدار $ در جدول را با 32 جایگزین کنید
+                    batch_size=8,
                     validation_data=(test_images_gray, test_labels),
                     verbose=1)
 
