@@ -13,35 +13,28 @@ train_images_gray = tf.image.rgb_to_grayscale(train_images)
 test_images_gray = tf.image.rgb_to_grayscale(test_images)
 
 model = models.Sequential([
-    
-    layers.RandomFlip("horizontal"),
-    layers.RandomRotation(0.1),
-    
     # لایه اول (Conv1)
-    layers.Conv2D(16, (3, 3), strides=(1, 1), padding='same', input_shape=(32, 32, 3)),
+    layers.Conv2D(16, (3, 3), strides=(1, 1), padding='same', input_shape=(32, 32, 1)),
     layers.BatchNormalization(),
     layers.ReLU(),
-    layers.SpatialDropout2D(0.1),  # جدید
     layers.MaxPooling2D((2, 2), strides=(1, 1)),
     
     # لایه دوم (Conv2)
     layers.Conv2D(32, (3, 3), strides=(1, 1), padding='same'),
     layers.BatchNormalization(),
     layers.ReLU(),
-    layers.SpatialDropout2D(0.15),  # جدید
     layers.MaxPooling2D((2, 2), strides=(1, 1)),
     
     # لایه سوم (Conv3)
     layers.Conv2D(64, (3, 3), strides=(1, 1), padding='same'),
     layers.BatchNormalization(),
     layers.ReLU(),
-    layers.SpatialDropout2D(0.2),  # جدید
-    layers.GlobalAveragePooling2D(),
+    layers.AveragePooling2D((2, 2), strides=(1, 1)),
     
-    # طبقه‌بندی
-    layers.Dense(64, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.001)),
-    layers.Dropout(0.5),
-    layers.Dense(10)
+    # لایه‌های تمام متصل
+    layers.Flatten(),
+    layers.Dense(64, activation='relu'),  # FC1
+    layers.Dense(10)  # FC2 (10 کلاس خروجی)
 ])
 
 
@@ -52,14 +45,14 @@ model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
 
 history = model.fit(train_images_gray, train_labels, 
                     epochs=100, 
-                    batch_size=8,  # مقدار $ در جدول را با 32 جایگزین کنید
+                    batch_size=32,  # مقدار $ در جدول را با 32 جایگزین کنید
                     validation_data=(test_images_gray, test_labels),
                     verbose=1)
 
 
 plt.plot(history.history['loss'], label='train_loss')
 plt.plot(history.history['val_loss'], label='val_loss')
-plt.xlabel('Epoch') 
+plt.xlabel('Epoch')
 plt.ylabel('Loss')
 plt.legend()
 plt.show()
