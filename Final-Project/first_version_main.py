@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 # نرمال‌سازی تصاویر به محدوده [0,1]
 train_images, test_images = train_images / 255.0, test_images / 255.0
 
-# تبدیل به تصاویر خاکستری (اگر لازم است)
+# تبدیل به تصاویر خاکستری 
 train_images_gray = tf.image.rgb_to_grayscale(train_images)
 test_images_gray = tf.image.rgb_to_grayscale(test_images)
 
@@ -45,7 +45,7 @@ model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
 
 history = model.fit(train_images_gray, train_labels, 
                     epochs=100, 
-                    batch_size=32,  # مقدار $ در جدول را با 32 جایگزین کنید
+                    batch_size=32,
                     validation_data=(test_images_gray, test_labels),
                     verbose=1)
 
